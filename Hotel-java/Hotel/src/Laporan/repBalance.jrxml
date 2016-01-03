@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e2ef7826-15a3-4c62-b36a-12d1d6215e8a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="65"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="totaldapat" class="java.lang.Float">
+		<defaultValueExpression><![CDATA[$P{totaldapat}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     pengeluaran.`nama_barang` AS pengeluaran_nama_barang,
+     pengeluaran.`tgl` AS pengeluaran_tgl,
+     pengeluaran.`total` AS pengeluaran_total
+FROM
+     `pengeluaran` pengeluaran]]>
+	</queryString>
+	<field name="pengeluaran_nama_barang" class="java.lang.String"/>
+	<field name="pengeluaran_tgl" class="java.sql.Date"/>
+	<field name="pengeluaran_total" class="java.lang.Double"/>
+	<variable name="totalkeluar" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{pengeluaran_total}]]></variableExpression>
+	</variable>
+	<variable name="totalrugi" class="java.lang.Double">
+		<variableExpression><![CDATA[$P{totaldapat}-$V{totalkeluar}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7a8b126a-b36e-44b0-ba5d-c471c828efdc" x="248" y="18" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[BALANCE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="8" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="123" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="93f4881e-b699-4986-97b4-f993649c4966" x="14" y="9" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PENDAPATAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b0f67731-df46-40b7-93ca-d331f8b2023a" x="14" y="41" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PENYEWAAN HOTEL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ee2c65d6-104d-4fff-a8f0-6e25b5d717aa" x="14" y="99" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PENGELUARAN]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0">
+				<reportElement uuid="e4ce08c0-2c05-46e2-915b-ae736bd3dcf0" x="250" y="41" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{totaldapat}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0dbca049-218f-451e-8a4c-6051f485cbd1" x="14" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pengeluaran_nama_barang}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement uuid="bbb087ad-2f2c-40da-b168-2bb3e6021cdd" x="348" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pengeluaran_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="3" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c2fb2b99-88a8-40c0-a425-f452688ad578" x="28" y="60" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LABA/RUGI]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0">
+				<reportElement uuid="54b4aed6-efbf-4eaf-85ee-fec1f2db861c" x="350" y="6" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totalkeluar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement uuid="3e04ede2-c52a-46b9-ac1c-6ffa55e73ed0" x="350" y="60" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totalrugi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="33f76a08-c5c2-48ff-ac42-823fc263516e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tgl" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tgl2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     room.`id_room` AS room_id_room,
+     kelas.`nama_kelas` AS kelas_nama_kelas,
+     kelas.`harga` AS kelas_harga,
+     pelanggan.`id_pelanggan` AS pelanggan_id_pelanggan,
+     pelanggan.`nama` AS pelanggan_nama,
+     pelanggan.`nohp` AS pelanggan_nohp,
+     pelanggan.`id_room` AS pelanggan_id_room,
+     pelanggan.`tgl_in` AS pelanggan_tgl_in,
+     pelanggan.`tgl_out` AS pelanggan_tgl_out,
+    DATEDIFF(pelanggan.`tgl_out`,pelanggan.`tgl_in`) AS DiffDate,
+    DATEDIFF(pelanggan.`tgl_out`,pelanggan.`tgl_in`)*kelas.`harga` AS TOTAL
+FROM
+     `room` room RIGHT OUTER JOIN `pelanggan` pelanggan ON room.`id_room` = pelanggan.`id_room`
+     LEFT OUTER JOIN `kelas` kelas ON room.`id_kelas` = kelas.`id_kelas`
+
+WHERE pelanggan.`tgl_in` BETWEEN $P{tgl} AND $P{tgl2} AND pelanggan.`tgl_out`=NULL]]>
+	</queryString>
+	<field name="room_id_room" class="java.lang.String"/>
+	<field name="kelas_nama_kelas" class="java.lang.String"/>
+	<field name="kelas_harga" class="java.lang.String"/>
+	<field name="pelanggan_id_pelanggan" class="java.lang.String"/>
+	<field name="pelanggan_nama" class="java.lang.String"/>
+	<field name="pelanggan_nohp" class="java.lang.String"/>
+	<field name="pelanggan_id_room" class="java.lang.String"/>
+	<field name="pelanggan_tgl_in" class="java.sql.Date"/>
+	<field name="pelanggan_tgl_out" class="java.sql.Date"/>
+	<field name="DiffDate" class="java.lang.Long"/>
+	<field name="TOTAL" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="00fe010b-f7ca-4972-b3aa-01511ed6ac1a" x="235" y="12" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[SEWA HOTEL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6601a4f3-70e8-4f62-ae15-7e73621a1eb3" x="135" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[pelanggan_nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f6c09ad5-3bb0-4fd3-a81f-ece877b4f87e" x="12" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[pelanggan_id_pelanggan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f069f29e-6c95-4945-aea3-50210be38727" x="256" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[pelanggan_nohp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c2e5cbfe-a967-4220-a895-7be14bbb3d4e" x="382" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[pelanggan_id_room]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8c36dd75-f417-4c33-9eb8-262c336f986d" x="135" y="11" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pelanggan_nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f3dd3eb2-5337-43f9-a73f-127b3cacc1a6" x="12" y="11" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pelanggan_id_pelanggan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fb3763ab-e3ea-4c85-9b53-c42c6c13a42a" x="256" y="11" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pelanggan_nohp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ad0c46d6-ed7d-43ae-bd75-db1360429716" x="382" y="9" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pelanggan_id_room}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
